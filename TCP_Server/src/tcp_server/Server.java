@@ -63,5 +63,19 @@ public class Server {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
        }
+
+       public void termina(){
+        if (serverSocket!=null){
+            try {
+                serverSocket.close();
+                System.out.println("Chiusura socket server avvenuta");
+            } catch (IOException e) {
+                System.err.println("Il socket server non può terminarsi");
+                throw new RuntimeException(e);
+            }
+        } else{
+            System.out.println("Non terminabile perché non istanziato");
+        }
+       }
     }
 
