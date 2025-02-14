@@ -4,7 +4,7 @@
  */
 package tcp_client;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,12 +38,39 @@ public class Client {
     }
     
      public void scrivi(){
-           
-           
-       }
+         InputStream i;
+         BufferedReader br;
+         String messaggio;
+
+         try {
+             i=socket.getInputStream();
+             br=new BufferedReader(new InputStreamReader(i));
+             messaggio=br.readLine();
+             System.out.println("Ricevuto il messaggio: "+messaggio);
+         } catch (IOException ex) {
+             throw new RuntimeException(e);
+             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+             System.err.println("Errore: Messaggio non ricevuto");
+         }
+
+
+     }
        
        public void leggi(){
-           
+           OutputStream os;
+           BufferedWriter bw;
+           String messaggio="Client attivo";
+
+           try {
+               os=socket.getOutputStream();
+               bw=new BufferedWriter(new OutputStreamWriter(os));
+               bw.write(messaggio);
+               bw.flush();
+           } catch (IOException ex) {
+               throw new RuntimeException(e);
+               Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+           }
+
        }
        
        public void chiudi(){
