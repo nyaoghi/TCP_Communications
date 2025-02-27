@@ -48,7 +48,6 @@ public class Client {
              messaggio=br.readLine();
              System.out.println("Ricevuto il messaggio: "+messaggio);
          } catch (IOException ex) {
-             throw new RuntimeException(e);
              Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
              System.err.println("Errore: Messaggio non ricevuto");
          }
@@ -67,7 +66,6 @@ public class Client {
                bw.write(messaggio);
                bw.flush();
            } catch (IOException ex) {
-               throw new RuntimeException(e);
                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
            }
 

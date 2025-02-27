@@ -4,7 +4,10 @@
  */
 package tcp_server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -77,5 +80,10 @@ public class Server {
             System.out.println("Non terminabile perché non istanziato");
         }
        }
+
+
+
+
     }
+
 
