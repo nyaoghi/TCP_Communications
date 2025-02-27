@@ -4,10 +4,7 @@
  */
 package tcp_server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -19,13 +16,13 @@ import java.util.logging.Logger;
  * @author olgac
  */
 public class Server {
-    
+
     ServerSocket serverSocket;
     Socket clientSocket;
     int porta;
-    
-    public Server(int porta){
-        
+
+    public Server(int porta) {
+
         this.porta = porta;
         try {
             serverSocket = new ServerSocket(porta);
@@ -35,40 +32,40 @@ public class Server {
             System.out.println("Errore del server, nella fase di ascolto");
         }
     }
-        
-       public Socket attendi(){
+
+    public Socket attendi() {
         try {
             clientSocket = serverSocket.accept();
             System.out.println("Data Socket creato, connessione avvenuta");
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Problemi di connessione con il client");
-            
+
         }
-           return clientSocket;
-           
-       } 
-        
-       public void invia(){
-           
-           
-       }
-       
-       public void ricevi(){
-           
-       }
-       
-       public void chiudi(){
+        return clientSocket;
+
+    }
+
+    public void invia() {
+
+
+    }
+
+    public void ricevi() {
+
+    }
+
+    public void chiudi() {
         try {
             clientSocket.close();
             System.out.println("Chiusura comunicazione");
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
-       }
+    }
 
-       public void termina(){
-        if (serverSocket!=null){
+    public void termina() {
+        if (serverSocket != null) {
             try {
                 serverSocket.close();
                 System.out.println("Chiusura socket server avvenuta");
@@ -76,14 +73,43 @@ public class Server {
                 System.err.println("Il socket server non può terminarsi");
                 throw new RuntimeException(e);
             }
-        } else{
+        } else {
             System.out.println("Non terminabile perché non istanziato");
         }
-       }
+    }
 
+    public void leggi() {
+        InputStream i;
+        BufferedReader br;
+        String messaggio;
 
+        try {
+            i = clientSocket.getInputStream();
+            br = new BufferedReader(new InputStreamReader(i));
+            messaggio = br.readLine();
+            System.out.println("Ricevuto il messaggio: " + messaggio);
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println("Errore: Messaggio non ricevuto");
+        }
 
 
     }
 
+    public void scrivi() {
+        OutputStream os;
+        BufferedWriter bw;
+        String messaggio = "Client attivo";
 
+        try {
+            os = clientSocket.getOutputStream();
+            bw = new BufferedWriter(new OutputStreamWriter(os));
+            bw.write(messaggio);
+            bw.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+}
