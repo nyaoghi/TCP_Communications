@@ -39,9 +39,8 @@ public class TCP_Server {
 
         while(i<numero) {
             s.attendi();
-            s.chiudi();
             s.leggi();
-            //s.scrivi();
+            s.scrivi();
             s.chiudi();
             i++;
         }

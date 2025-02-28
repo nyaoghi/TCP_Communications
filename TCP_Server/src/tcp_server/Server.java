@@ -99,12 +99,12 @@ public class Server {
     public void scrivi() {
         OutputStream os;
         BufferedWriter bw;
-        String messaggio = "Client attivo";
+        String messaggio = "Server attivo";
 
         try {
             os = clientSocket.getOutputStream();
             bw = new BufferedWriter(new OutputStreamWriter(os));
-            bw.write(messaggio);
+            bw.write(messaggio+"\n");
             bw.flush();
         } catch (IOException ex) {
             Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
